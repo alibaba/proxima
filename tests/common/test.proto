@@ -1,0 +1,36 @@
+syntax = "proto3";
+package proxima.be.proto.test;
+
+message ProtoTest {
+  enum Enum {
+    MON = 0;
+    TUE = 1;
+    SUN = 6;
+  }
+  message Nest {
+    int32 i32 = 1;
+    uint32 u32 = 2;
+  }
+  int32 i32 = 1;
+  uint32 u32 = 2;
+  int64 i64 = 3;
+  uint64 u64 = 4;
+  float f32 = 5;
+  double f64 = 6;
+  bool b = 7;
+  Enum e = 8;
+  Nest nest = 9;
+  string str = 19;
+  bytes binary = 20;
+  repeated int32 i32s = 10;
+  repeated uint32 u32s = 11;
+  repeated int64 i64s = 12;
+  repeated uint64 u64s = 13;
+  repeated float f32s = 14;
+  repeated double f64s = 15;
+  repeated bool bs = 16;
+  repeated Enum es = 17;
+  repeated Nest nests = 18;
+  repeated string strs = 21;
+  repeated bytes binarys = 22;
+}

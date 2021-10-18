@@ -1,0 +1,8 @@
+#!/bin/bash
+if ! [ -f .commit ]; then
+	# not trigerred by user commit, exit
+	exit
+fi
+rm -f .commit
+
+./scripts/hooks/clang-format.sh

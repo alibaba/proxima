@@ -1,0 +1,20 @@
+{
+  "name": "Proxima-Bilin-Engine",
+  "version": "0.0.1",
+  "description": "Docs site for the Proxima Bilin Engine project.",
+  "main": "none.js",
+  "repository": {
+    "type": "git",
+    "url": "git+http://gitlab.alibaba-inc.com/proxima/proxima-be-docs-opensource.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "http://gitlab.alibaba-inc.com/proxima/proxima-be-docs-opensource/issues"
+  },
+  "homepage": "http://gitlab.alibaba-inc.com/proxima/proxima-be-docs-opensource.git#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "postcss-cli": "^7.1.2"
+  }
+}

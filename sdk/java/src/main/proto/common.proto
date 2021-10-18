@@ -1,0 +1,145 @@
+/**
+ *   Copyright (C) The Software Authors. All rights reserved.
+
+ *   \file     common.proto
+ *   \author   Hechong.xyf
+ *   \date     Oct 2020
+ *   \version  1.0.0
+ *   \brief    Common definition for bilin engine
+ */
+
+syntax = "proto3";
+
+option java_package = "com.alibaba.proxima.be.grpc";
+option java_multiple_files = true;
+option java_outer_classname = "ProximaCommonProto";
+
+package proxima.be.proto;
+
+// The Go package name, refers to https://developers.google.com/protocol-buffers/docs/reference/go-generated#package
+option go_package = "proxima/be/proto";
+
+/*! Union of Generic Value
+ */
+message GenericValue {
+  oneof value_oneof {
+    bytes bytes_value = 1;
+    string string_value = 2;
+    bool bool_value = 3;
+    int32 int32_value = 4;
+    int64 int64_value = 5;
+    uint32 uint32_value = 6;
+    uint64 uint64_value = 7;
+    float float_value = 8;
+    double double_value = 9;
+  };
+};
+
+/*! Message of Generic Value List
+ */
+message GenericValueList {
+    repeated GenericValue values = 1;
+};
+
+/*! Message of Generic Value Meta
+ */
+message GenericValueMeta {
+  /*! Types of Field
+   */
+  enum FieldType {
+    FT_BYTES = 0;   // bytes
+    FT_STRING = 1;  // string
+    FT_BOOL = 2;    // bool
+    FT_INT32 = 3;   // int32
+    FT_INT64 = 4;   // int64
+    FT_UINT32 = 5;  // uint32
+    FT_UINT64 = 6;  // uint64
+    FT_FLOAT = 7;   // float
+    FT_DOUBLE = 8;  // double float
+  };
+
+  string field_name = 1;
+  FieldType field_type = 2;
+};
+
+/*! Message of Generic Key-Value Pair
+ */
+message GenericKeyValue {
+  string key = 1;
+  GenericValue value = 2;
+};
+
+/*! Message of IndexParameter, which used to customize index, and query
+ */
+message KeyValuePair {
+  string key = 1;
+  string value = 2;
+}
+
+/*! Types of Operation
+ */
+enum OperationType {
+  OP_INSERT = 0;  // Insert Operation
+  OP_UPDATE = 1;  // Update Operation
+  OP_DELETE = 2;  // Delete Operation
+};
+
+/*! Types of Feature (same as Proxima)
+   */
+enum FeatureType {
+  FT_UNDEFINED = 0;  // Undefined
+  FT_BINARY32 = 1;   // 32-bits Binary
+  FT_BINARY64 = 2;   // 64-bits Binary
+  FT_FP16 = 3;       // 16-bits Float Number
+  FT_FP32 = 4;       // 32-bits Float Number
+  FT_FP64 = 5;       // 64-bits Float Number
+  FT_INT8 = 6;       // 8-bits Integer
+  FT_INT16 = 7;      // 16-bits Integer
+  FT_INT4 = 8;       // 4-bits Integer
+};
+
+/*! Types of Index
+ */
+enum IndexType {
+  IT_UNDEFINED = 0;          // Undefined
+  IT_PROXIMA_GRAPH_INDEX = 1;  // Proxima Graph Index
+};
+
+enum DataType {
+  DT_UNDEFINED = 0;
+  DT_BINARY = 1;  
+  DT_STRING = 2;
+  DT_BOOL = 3;
+  DT_INT32 = 4;
+  DT_INT64 = 5;
+  DT_UINT32 = 6;
+  DT_UINT64 = 7;
+  DT_FLOAT = 8;
+  DT_DOUBLE = 9;
+
+  DT_VECTOR_BINARY32 = 20;
+  DT_VECTOR_BINARY64 = 21;
+  DT_VECTOR_FP16 = 22;
+  DT_VECTOR_FP32 = 23;
+  DT_VECTOR_FP64 = 24;
+  DT_VECTOR_INT4 = 25;
+  DT_VECTOR_INT8 = 26;
+  DT_VECTOR_INT16 = 27;
+}
+
+//! Common Response
+message CommonResponse {
+  int32 code = 1;
+  string reason = 2;
+};
+
+message Status {
+  int32 code = 1;
+  string reason = 2;
+}
+
+//! Common Http Request for admin
+message HttpRequest {};
+
+//! Common Http Response for admin
+message HttpResponse {};

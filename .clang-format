@@ -1,0 +1,31 @@
+# http://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# Defines the Google C++ style for automatic reformatting.
+BasedOnStyle: Google
+MaxEmptyLinesToKeep: 2
+DerivePointerAlignment: false
+PointerAlignment: Right
+AllowShortFunctionsOnASingleLine: Empty
+IncludeBlocks: Merge
+IncludeCategories:
+  - Regex:           '^<linux/[0-9A-Za-z]+'
+    Priority:        100
+  - Regex:           '^<mach/[0-9A-Za-z]+'
+    Priority:        101
+  - Regex:           '^<mach-o/[0-9A-Za-z]+'
+    Priority:        102
+  - Regex:           '^<sys/[0-9A-Za-z]+'
+    Priority:        103
+  - Regex:           '^<[0-9A-Za-z]+\.h>$'
+    Priority:        200
+  - Regex:           '^<[0-9A-Za-z_]+>$'
+    Priority:        201
+  - Regex:           '^<[0-9A-Za-z_]+\.[0-9A-Za-z]+>$'
+    Priority:        202
+  - Regex:           '^<[0-9A-Za-z_]+/[0-9A-Za-z]+'
+    Priority:        203
+  - Regex:           '^\"[0-9A-Za-z_]+/[0-9A-Za-z]+'
+    Priority:        300
+  - Regex:           '^\"[0-9A-Za-z_]+\.[0-9A-Za-z]+\"$'
+    Priority:        301
+  - Regex:           '.*'
+    Priority:        1000

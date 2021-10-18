@@ -1,0 +1,59 @@
+##
+##  Copyright (C) The Software Authors. All rights reserved.
+##
+##  \file     CMakeLists.txt
+##  \author   Hechong.xyf
+##  \date     Nov 2020
+##  \version  1.0
+##  \brief    Detail cmake build script for openssl (thirdparty)
+##
+
+set(OPENSSL_INCLUDE_DIR ${EXTERNAL_BINARY_DIR}/usr/local/include)
+set(OPENSSL_LIBRARY_DIR ${EXTERNAL_BINARY_DIR}/usr/local/lib)
+
+set(OPENSSL_CRYPTO_LIBRARY ${OPENSSL_LIBRARY_DIR}/libcrypto.a)
+set(OPENSSL_SSL_LIBRARY ${OPENSSL_LIBRARY_DIR}/libssl.a)
+file(MAKE_DIRECTORY ${OPENSSL_INCLUDE_DIR})
+file(MAKE_DIRECTORY ${OPENSSL_LIBRARY_DIR})
+
+include(ExternalProject)
+ExternalProject_Add(
+    OpenSSL.BUILD
+    PREFIX openssl
+    URL "https://www.openssl.org/source/old/1.1.1/openssl-1.1.1i.tar.gz"
+    CONFIGURE_COMMAND <SOURCE_DIR>/config no-shared no-tests no-ui-console --openssldir=ssl --release
+    BUILD_COMMAND make -j build_libs
+    INSTALL_COMMAND make DESTDIR=${EXTERNAL_BINARY_DIR} LIBDIR=lib install_dev
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON
+    LOG_INSTALL ON
+  )
+
+set(OPENSSL_FOUND TRUE PARENT_SCOPE)
+set(OPENSSL_INCLUDE_DIR ${OPENSSL_INCLUDE_DIR} PARENT_SCOPE)
+set(OPENSSL_INCLUDE_DIRS ${OPENSSL_INCLUDE_DIR} PARENT_SCOPE)
+set(OPENSSL_SSL_LIBRARY ${OPENSSL_SSL_LIBRARY} PARENT_SCOPE)
+set(OPENSSL_SSL_LIBRARIES ${OPENSSL_SSL_LIBRARY} PARENT_SCOPE)
+set(OPENSSL_CRYPTO_LIBRARY ${OPENSSL_CRYPTO_LIBRARY} PARENT_SCOPE)
+set(OPENSSL_CRYPTO_LIBRARIES ${OPENSSL_CRYPTO_LIBRARY} PARENT_SCOPE)
+set(OPENSSL_LIBRARIES ${OPENSSL_SSL_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY} PARENT_SCOPE)
+set(OPENSSL_VERSION 1.1.1i PARENT_SCOPE)
+
+file(MAKE_DIRECTORY ${OPENSSL_INCLUDE_DIR})
+
+add_library(OpenSSL.Crypto UNKNOWN IMPORTED GLOBAL)
+set_target_properties(
+    OpenSSL.Crypto PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
+    IMPORTED_LOCATION ${OPENSSL_CRYPTO_LIBRARY}
+  )
+add_dependencies(OpenSSL.Crypto OpenSSL.BUILD)
+
+add_library(OpenSSL.SSL UNKNOWN IMPORTED GLOBAL)
+set_target_properties(
+    OpenSSL.SSL PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
+    IMPORTED_LOCATION ${OPENSSL_SSL_LIBRARY}
+  )
+add_dependencies(OpenSSL.SSL OpenSSL.BUILD)

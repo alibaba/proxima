@@ -1,0 +1,5 @@
+-r requirements.txt
+sphinxcontrib-napoleon>=0.7
+sphinx>=3.4
+sphinx-rtd-theme
+yapf==0.30.0

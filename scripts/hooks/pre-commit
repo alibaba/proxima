@@ -1,0 +1,3 @@
+#!/bin/bash
+# create a tag file to notify post-commit
+touch .commit

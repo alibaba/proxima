@@ -1,0 +1,65 @@
+/**
+ *   Copyright (C) The Software Authors. All rights reserved.
+
+ *   \file     config.proto
+ *   \author   Hongqing.hu
+ *   \date     Nov 2020
+ *   \version  1.0.0
+ *   \brief    Config definition for proxima_be
+ */
+
+syntax = "proto3";
+
+package proxima.be.proto;
+
+// The Go package name, refers to https://developers.google.com/protocol-buffers/docs/reference/go-generated#package
+option go_package = "proxima/be/proto";
+
+message MetricsConfig {
+  string name = 1;
+}
+
+/*! Message of Common Config
+ */
+message CommonConfig {
+  string protocol = 1;
+  uint32 grpc_listen_port = 2;
+  uint32 http_listen_port = 3;
+  string logger_type = 4;
+  string log_directory = 5;
+  string log_file = 6;
+  int32 log_level = 7;
+  MetricsConfig metrics_config = 8;
+};
+
+/*! Message of Query Config
+ */
+message QueryConfig {
+  uint32 query_thread_count = 1;
+};
+
+/*! Message of Index Config
+ */
+message IndexConfig {
+  uint32 build_thread_count = 1;
+  uint32 dump_thread_count = 2;
+  uint32 max_build_qps = 3;
+  string index_directory = 5;
+  uint32 flush_internal = 6;
+  uint32 optimize_internal = 7;
+};
+
+/*! Meta configuration
+ */
+message MetaConfig {
+  string meta_uri = 1;  // meta database config, default sqlite://meta.sqlite
+};
+
+/*! Message of Proxima BE Config
+ */
+message ProximaSEConfig {
+  CommonConfig common_config = 1;
+  QueryConfig query_config = 2;
+  IndexConfig index_config = 3;
+  MetaConfig meta_config = 4;
+};

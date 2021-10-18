@@ -1,0 +1,12 @@
+.*
+*~
+bazel-*
+build/*
+bin/*
+lib/*
+var/*
+deps/*
+!.git*
+!.clang-format
+!.circleci
+!.drone.yml

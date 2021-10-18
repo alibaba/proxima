@@ -1,0 +1,9 @@
+.*
+*~
+bazel-*
+build/*
+bin/*
+lib/*
+var/*
+!.git*
+!.clang-format

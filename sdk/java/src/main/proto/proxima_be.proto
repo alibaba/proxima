@@ -1,0 +1,302 @@
+syntax = "proto3";
+import "common.proto";
+package proxima.be.proto;
+
+option java_package = "com.alibaba.proxima.be.grpc";
+option java_multiple_files = true;
+option java_outer_classname = "ProximaSeProto";
+
+// CC options
+option cc_generic_services = true;
+
+// The Go package name, refers to https://developers.google.com/protocol-buffers/docs/reference/go-generated#package
+option go_package = "proxima/be/proto";
+
+message CollectionConfig {
+  message IndexColumnParam {
+    string column_name = 1;
+    IndexType index_type = 2;
+    DataType data_type = 3;
+    uint32 dimension = 4;
+    repeated KeyValuePair extra_params = 5; //optional
+  }
+
+  message RepositoryConfig {
+    enum RepositoryType {
+      RT_DATABASE = 0;
+    }
+
+    message Database {
+      string connection_uri = 1;
+      string table_name = 2;
+      string user = 3;
+      string password = 4;
+    }
+
+    RepositoryType repository_type = 1;
+    string repository_name = 2;
+    oneof entity{
+      Database database = 3;
+    }
+  }
+
+  string collection_name = 1;
+  uint64 max_docs_per_segment = 2;
+  repeated string forward_column_names = 3;
+  repeated IndexColumnParam index_column_params = 4;
+  RepositoryConfig repository_config = 5; //optional
+}
+
+message CollectionName {
+  string collection_name = 1;
+}
+
+message LsnContext {
+  uint64 lsn = 1;
+  string context = 2;
+}
+
+message CollectionInfo {
+  enum CollectionStatus {
+    CS_INITIALIZED = 0;
+    CS_SERVING = 1;
+    CS_DROPPED = 2;
+  }
+
+  // static collection config
+  CollectionConfig config = 1;
+
+  // variable collection status
+  CollectionStatus status = 2;
+  string uuid = 3;
+  LsnContext latest_lsn_context = 4;
+  uint64 magic_number = 5;
+}
+
+message DescribeCollectionResponse {
+  Status status = 1;
+  CollectionInfo collection = 2;
+};
+
+message ListCondition {
+  string repository_name = 1; // optional
+}
+
+message ListCollectionsResponse {
+  Status status = 1;
+  repeated CollectionInfo collections = 2;
+};
+
+message CollectionStats {
+  message SegmentStats {
+    enum SegmentState {
+      SS_CREATED = 0;
+      SS_WRITING = 1;
+      SS_DUMPING = 2;
+      SS_COMPACTING = 3;
+      SS_PERSIST = 4;
+    }
+    uint32 segment_id = 1;
+    SegmentState state = 2;
+    uint64 doc_count = 3;
+    uint64 index_file_count = 4;
+    uint64 index_file_size = 5;
+    uint64 min_doc_id = 6;
+    uint64 max_doc_id = 7;
+    uint64 min_primary_key = 8;
+    uint64 max_primary_key = 9;
+    uint64 min_timestamp = 10;
+    uint64 max_timestamp = 11;
+    uint64 min_lsn = 12;
+    uint64 max_lsn = 13;
+    string segment_path = 14;
+  }
+
+  string collection_name = 1;
+  string collection_path = 2;
+  uint64 total_doc_count = 3;
+  uint64 total_segment_count = 4;
+  uint64 total_index_file_count = 5;
+  uint64 total_index_file_size = 6;
+  repeated SegmentStats segment_stats = 7;
+}
+
+message StatsCollectionResponse {
+  Status status = 1;
+  CollectionStats collection_stats = 2;
+};
+
+
+message WriteRequest {
+  message Row {
+    uint64 primary_key = 1;
+    OperationType operation_type = 2;
+    GenericValueList forward_column_values = 3;
+    GenericValueList index_column_values = 4;
+    LsnContext lsn_context = 5; // optional
+  }
+
+  message IndexColumnMeta {
+    string column_name = 1;
+    DataType data_type = 2;
+    uint32 dimension = 3;
+  }
+
+  message RowMeta {
+    repeated string forward_column_names = 1;
+    repeated IndexColumnMeta index_column_metas = 2;
+  }
+
+  string collection_name = 1;
+  RowMeta rowMeta = 2;
+  repeated Row rows = 3;
+  string request_id = 4; // optional
+  uint64 magic_number = 5; // optional
+}
+
+message Document {
+  uint64 primary_key = 1;
+  float score = 2;
+  repeated GenericKeyValue forward_column_values = 3;
+};
+
+message QueryRequest {
+  enum QueryType {
+    QT_KNN = 0;
+  }
+
+  message KnnQueryParam {
+    string column_name = 1;
+    uint32 topk = 2;
+    oneof features_value {
+      bytes features = 3;
+      string matrix = 4;
+    }
+    uint32 batch_count = 5;
+    uint32 dimension = 6;
+    DataType data_type = 7;
+    float radius = 8; // optional
+    bool is_linear = 9; // optional
+    repeated KeyValuePair extra_params = 10; // optional
+  }
+
+  string collection_name = 1;
+  QueryType query_type = 2;
+  bool debug_mode = 3;
+
+  oneof query_param {
+    KnnQueryParam knn_param = 4;
+  };
+}
+
+message QueryResponse {
+  message Result{
+    repeated Document documents = 1;
+  };
+
+  Status status = 1;
+  string debug_info = 2;
+  uint64 latency_us = 3;
+  repeated Result results = 4;
+}
+
+message GetDocumentRequest {
+  string collection_name = 1;
+  uint64 primary_key = 2;
+  bool debug_mode = 3;
+}
+
+message GetDocumentResponse {
+  Status status = 1;
+  string debug_info = 2;
+  Document document = 3;
+}
+
+message GetVersionRequest {
+}
+
+message GetVersionResponse {
+  Status status = 1;
+  string version = 2;
+}
+
+//! GRPC service 
+service ProximaService {
+  // Create a collection 
+  rpc create_collection(CollectionConfig) returns (Status);
+
+  // Drop a collection
+  rpc drop_collection(CollectionName) returns (Status);
+
+  // Get information of a collection
+  rpc describe_collection(CollectionName) returns (DescribeCollectionResponse);
+
+  // Get all collection information
+  rpc list_collections(ListCondition) returns (ListCollectionsResponse);
+
+  // Get collection statstics
+  rpc stats_collection(CollectionName) returns (StatsCollectionResponse);
+
+  // Write records
+  rpc write(WriteRequest) returns (Status);
+
+  // Knn query records
+  rpc query(QueryRequest) returns (QueryResponse);
+
+  // Get document information by primary key
+  rpc get_document_by_key(GetDocumentRequest) returns (GetDocumentResponse);
+
+  // Get server version
+  rpc get_version(GetVersionRequest) returns (GetVersionResponse);
+}
+
+//! Restful APIs of ProximaService for management of proxima be
+service HttpProximaService {
+  //! Collection management APIS
+  //  1. Create Collection
+  //     Http: POST /v1/collection/{collection}
+  //     You can use the create collection API to add a new collection to an Proxima BE server. When creating an
+  //     index, you need specify the CollectionConfig as json string attached to the body
+  //  2. Get Collection
+  //     HTTP: GET /{collection}
+  //     Returns information about one collection named by Path Param ${collection}.
+  //  3. Delete Collection
+  //     HTTP: DEL /{collection}
+  //     Deletes an existing collection named by Path Param ${collection}
+  //  4. Update Collection
+  //     HTTP: PUT /{collection}, supported later
+  //
+  rpc collection(HttpRequest) returns (HttpResponse);
+
+  //! Retrieve Stat of Collection
+  // HTTP: GET /v1/collection/{collection}/stat
+  //
+  rpc stats_collection(HttpRequest) returns (HttpResponse);
+
+  //! Write records to collection
+  // HTTP: POST /v1/collection/{collection}/index
+  //
+  rpc write(HttpRequest) returns (HttpResponse);
+
+  //! Query documents on collection
+  // HTTP: POST /v1/collection/{collection}/query
+  //
+  rpc query(HttpRequest) returns (HttpResponse);
+
+  //! Write records to collection
+  // HTTP: GET /v1/collection/{collection}/doc?key={primary_key}
+  //
+  rpc get_document_by_key(HttpRequest) returns (HttpResponse);
+
+  //! List Collections
+  // HTTP: GET /v1/collections?repository={repo}
+  // Returns information about collections. Query param ${repo} specified collection should have been attached
+  // repository named by ${repo}
+  //
+  rpc list_collections(HttpRequest) returns (HttpResponse);
+
+  //! Get server version
+  // HTTP: GET /version
+  // Returns version string
+  rpc get_version(HttpRequest) returns (HttpResponse);
+}

@@ -1,0 +1,39 @@
+/**
+ *   Copyright (C) The Software Authors. All rights reserved.
+
+ *   \file     config.proto
+ *   \author   Hongqing.hu
+ *   \date     Nov 2020
+ *   \version  1.0.0
+ *   \brief    Config definition for proxima_be
+ */
+
+syntax = "proto3";
+
+package proxima.be.proto;
+
+/*! Message of Common Config
+ */
+message RepositoryCommonConfig {
+  string log_directory = 1;
+  string log_file = 2;
+  int32 log_level = 3;
+  string logger_name = 4;
+};
+
+message MysqlRepositoryConfig {
+  string index_agent_addr = 1;
+  string load_balance = 2;
+  uint32 batch_size = 3;
+  uint32 batch_interval = 4;
+  uint32 max_retry = 5;
+  string repository_name = 6;
+  uint32 timeout_ms = 7;
+};
+
+/*! Message of Repository Config
+ */
+message RepositoryConfig {
+  RepositoryCommonConfig common_config = 1;
+  MysqlRepositoryConfig repository_config = 2;
+};

@@ -1,0 +1,4 @@
+requests>=2.4
+grpcio>=1.22.0
+grpcio-tools>=1.22.0
+orjson>=3.4.0
