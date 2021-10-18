@@ -36,7 +36,7 @@ Proxima BE 的主要核心能力有以下几点:
 
 ```shell
 git clone https://github.com/alibaba/proximabilin.git
-git submodule update --init
+cd proximabilin && git submodule update --init
 
 mkdir build && cd build
 
