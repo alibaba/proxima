@@ -11,8 +11,9 @@ Proxima BE，全称 Proxima Bilin Engine，是 Proxima 团队开发的服务化�
 ## 核心能力
 
 <p align="center">
-<img src="docs/static/resources/images/main.png" width="70%" height="70%">
+<img src="resources/images/main.png" width="70%" height="70%">
 </p>
+
 <br>
 
 Proxima BE 的主要核心能力有以下几点:
