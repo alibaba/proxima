@@ -1,4 +1,4 @@
-module github.com/alibaba/proxima-be/sdk/go
+module github.com/alibaba/proximabilin/sdk/go
 
 go 1.16
 

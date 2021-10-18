@@ -26,7 +26,7 @@ import (
 	"log"
 	"os"
 
-	be "github.com/alibaba/proxima-be/sdk/go"
+	be "github.com/alibaba/proximabilin/sdk/go"
 )
 
 var (

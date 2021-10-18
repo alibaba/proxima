@@ -30,7 +30,7 @@ import (
 	"net/http"
 	"time"
 
-	pb "github.com/alibaba/proxima-be/sdk/go/proto"
+	pb "github.com/alibaba/proximabilin/sdk/go/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/encoding/protojson"

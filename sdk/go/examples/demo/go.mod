@@ -1,10 +1,8 @@
-module github.com/alibaba/proxima-be/sdk/go/example/demo
+module github.com/alibaba/proximabilin/sdk/go/example/demo
 
 go 1.16
 
-require github.com/alibaba/proxima-be/sdk/go v0.1.0
+require github.com/alibaba/proximabilin/sdk/go v0.1.0
 
-replace github.com/alibaba/proxima-be/sdk/go => ../../
+replace github.com/alibaba/proximabilin/sdk/go => ../../
 
-// uncomments following statements for local import
-// replace gitlab.alibaba-inc.com/proxima/proxima-be-go-sdk => ../../

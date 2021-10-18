@@ -28,7 +28,7 @@ import (
 	"math"
 	"reflect"
 
-	pb "github.com/alibaba/proxima-be/sdk/go/proto"
+	pb "github.com/alibaba/proximabilin/sdk/go/proto"
 
 	"github.com/boljen/go-bitmap"
 )

@@ -23,7 +23,7 @@ package be
 import (
 	"fmt"
 
-	pb "github.com/alibaba/proxima-be/sdk/go/proto"
+	pb "github.com/alibaba/proximabilin/sdk/go/proto"
 )
 
 // ListCollectionFilter for ListCollections method

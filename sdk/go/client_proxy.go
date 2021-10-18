@@ -23,7 +23,7 @@ package be
 import (
 	"errors"
 
-	pb "github.com/alibaba/proxima-be/sdk/go/proto"
+	pb "github.com/alibaba/proximabilin/sdk/go/proto"
 )
 
 func wrapError(in *pb.Status) error {

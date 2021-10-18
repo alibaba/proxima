@@ -36,7 +36,7 @@ setuptools.setup(
         'write_to_template': '__version__ = "{version}"',
         'version_scheme' : 'post-release',
     },
-    url='https://github.com/alibaba/proxima-be/sdk/python/',
+    url='https://github.com/alibaba/proximabilin/',
     license="inner",
     packages=setuptools.find_packages(),
     include_package_data=True,
