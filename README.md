@@ -4,11 +4,9 @@
 
 随着 AI 技术的广泛应用，以及数据规模的不断增长，对非结构化数据处理的需求也日益增多。向量检索也逐渐成了 AI 技术链路中不可或缺的一环，同时也是对传统搜索技术的补充。
 
-Proxima 是阿里巴巴达摩院系统 AI 实验室自研的向量检索内核。目前，其核心能力广泛应用于阿里巴巴和蚂蚁集团内众多业务，如淘宝搜索和推荐、蚂蚁人脸支付、优酷视频搜索、阿里妈妈广告检索等。同时，Proxima
-还深度集成在各式各类的大数据和数据库产品中，如阿里云 Hologres、搜索引擎 Elastic Search 和 ZSearch、离线引擎 MaxCompute (ODPS) 等，为其提供向量检索的能力。
+Proxima 是阿里巴巴达摩院系统 AI 实验室自研的向量检索内核。目前，其核心能力广泛应用于阿里巴巴和蚂蚁集团内众多业务，如淘宝搜索和推荐、蚂蚁人脸支付、优酷视频搜索、阿里妈妈广告检索等。同时，Proxima 还深度集成在各式各类的大数据和数据库产品中，如阿里云 Hologres、搜索引擎 Elastic Search 和 ZSearch、离线引擎 MaxCompute (ODPS) 等，为其提供向量检索的能力。
 
-Proxima BE，全称 Proxima Bilin Engine，是 Proxima 团队开发的服务化引擎，实现了对大数据的高性能相似性搜索。支持 RESTful HTTP 接口访问，同时也支持多种语言的 SDK 以 GRPC
-协议访问。
+Proxima BE，全称 Proxima Bilin Engine，是 Proxima 团队开发的服务化引擎，实现了对大数据的高性能相似性搜索。支持 RESTful HTTP 接口访问，同时也支持多种语言的 SDK 以 GRPC 协议访问。
 
 ## 核心能力
 
@@ -37,18 +35,17 @@ Proxima BE 的主要核心能力有以下几点:
 
 ```shell
 git clone https://github.com/alibaba/proximabilin.git
-
 git submodule update --init
 
 mkdir build && cd build
 
-# Intel haswell 架构下 Debug 方式编译
-#cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_NEHALEM=ON ..
+# Build with Debug (Intel Haswell Microarchitecture)
+#cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_HASWELL=ON ..
 
-# Intel haswell 架构下 Release 方式编译
+# Build with Release (Intel Haswell Microarchitecture)
 cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_HASWELL=ON ..
 
-make all
+make -j all
 ```
 
 
@@ -75,11 +72,6 @@ make all
 ## License
 
 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-## 如何交流
-
-* 邮箱
-* 钉钉群
 
 ## 声明
 
