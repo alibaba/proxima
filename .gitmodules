@@ -22,6 +22,3 @@
 [submodule "deps/thirdparty/leveldb/leveldb"]
 	path = deps/thirdparty/leveldb/leveldb
 	url = https://github.com/google/leveldb.git
-[submodule "docs/themes/docsy"]
-	path = docs/themes/docsy
-	url = https://github.com/google/docsy.git

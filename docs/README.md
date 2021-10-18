@@ -28,6 +28,12 @@ $ wget https://github.com/gohugoio/hugo/releases/download/v0.87.0/hugo_extended_
 $ hugo version
 ```
 
+下载样式模版文件，并放到 themes 目录中：
+
+```s
+$ git clone https://github.com/google/docsy.git themes/docsy
+```
+
 ### 2.2 安装 SCSS
 
 在`项目目录`中：
