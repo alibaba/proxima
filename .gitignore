@@ -19,9 +19,12 @@ tests/integration/log
 !.clang-format
 !.circleci
 !.drone.yml
-sdk/python/pyproximabe/proto/
+
+sdk/python/pyproximabe/proto/*
+!sdk/python/pyproximabe/proto/__init__.py
 sdk/python/dist/
 sdk/python/pyproximase.egg-info/
+
 GPATH
 GRTAGS
 GTAGS
