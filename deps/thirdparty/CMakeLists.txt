@@ -17,19 +17,19 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(EXTERNAL_BINARY_DIR ${CMAKE_BINARY_DIR}/external)
 
 file(GLOB PATCHES "${CMAKE_CURRENT_SOURCE_DIR}/patches/*.patch")
-if (PATCHES)
-  foreach (PATCH ${PATCHES})
-    message(STATUS "Applying ${PATCH}")
+if(PATCHES)
+  foreach(PATCH ${PATCHES})
     execute_process(
         COMMAND patch -p1 --forward --ignore-whitespace
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         INPUT_FILE "${PATCH}"
-        RESULT_VARIABLE RESULT)
-    if (RESULT EQUAL 0)
-        message(STATUS "Patch applied: ${PATCH}")
-    endif ()
-  endforeach (PATCH)
-endif ()
+        RESULT_VARIABLE RESULT
+      )
+    if(RESULT EQUAL 0)
+      message(STATUS "Patch applied: ${PATCH}")
+    endif()
+  endforeach(PATCH)
+endif()
 
 ## EXCLUDE_FROM_ALL
 add_subdirectory(openssl openssl EXCLUDE_FROM_ALL)
