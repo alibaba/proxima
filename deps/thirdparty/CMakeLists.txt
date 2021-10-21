@@ -28,7 +28,7 @@ if(PATCHES)
     if(RESULT EQUAL 0)
       message(STATUS "Patch applied: ${PATCH}")
     endif()
-  endforeach(PATCH)
+  endforeach()
 endif()
 
 ## EXCLUDE_FROM_ALL
