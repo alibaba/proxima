@@ -30,7 +30,7 @@ list(APPEND CMAKE_CACHE_ARGS -DCURSES_INCLUDE_PATH:PATH=${CURSES_INCLUDE_PATH})
 
 ExternalProject_Add(
     MySQL.BUILD PREFIX mysql
-    URL "http://ftp.ntu.edu.tw/MySQL/Downloads/MySQL-5.7/mysql-boost-5.7.33.tar.gz"
+    URL "https://downloads.mysql.com/archives/get/p/23/file/mysql-boost-5.7.33.tar.gz"
     CONFIGURE_COMMAND "${CMAKE_COMMAND}" ${CMAKE_CACHE_ARGS} -G ${CMAKE_GENERATOR} "<SOURCE_DIR>"
     BUILD_COMMAND "${CMAKE_COMMAND}" --build . --target mysqlclient -- -j
     INSTALL_COMMAND "${CMAKE_COMMAND}" -E env DESTDIR=${EXTERNAL_BINARY_DIR} "${CMAKE_COMMAND}" --build ./include --target install
