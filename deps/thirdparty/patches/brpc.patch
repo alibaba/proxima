@@ -1,0 +1,43 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3deb7342..2937c8d6 100644
+--- a/brpc/brpc/CMakeLists.txt
++++ b/brpc/brpc/CMakeLists.txt
+@@ -141,7 +141,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+     endif()
+ endif()
+ 
+-include(FindProtobuf)
++# include(FindProtobuf)
+ include(FindThreads)
+ 
+ find_path(LEVELDB_INCLUDE_PATH NAMES leveldb/db.h)
+@@ -433,7 +433,7 @@ if(BUILD_UNIT_TESTS)
+     enable_testing()
+     add_subdirectory(test)
+ endif()
+-add_subdirectory(tools)
++# add_subdirectory(tools)
+ 
+ file(COPY ${CMAKE_CURRENT_BINARY_DIR}/brpc/
+         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/output/include/brpc/
+diff --git a/src/butil/containers/case_ignored_flat_map.cpp b/src/butil/containers/case_ignored_flat_map.cpp
+index 7f2fadc5..ce699a9a 100644
+--- a/brpc/brpc/src/butil/containers/case_ignored_flat_map.cpp
++++ b/brpc/brpc/src/butil/containers/case_ignored_flat_map.cpp
+@@ -19,7 +19,7 @@
+ 
+ namespace butil {
+ 
+-static const char g_tolower_map_base[] = {
++static const signed char g_tolower_map_base[] = {
+     -128, -127, -126, -125, -124, -123, -122, -121, -120,
+     -119, -118, -117, -116, -115, -114, -113, -112, -111, -110,
+     -109, -108, -107, -106, -105, -104, -103, -102, -101, -100,
+@@ -48,6 +48,6 @@ static const char g_tolower_map_base[] = {
+     120, 121, 122, 123, 124, 125, 126, 127
+ };
+ 
+-extern const char* const g_tolower_map = g_tolower_map_base + 128;
++extern const char* const g_tolower_map = (const char*)g_tolower_map_base + 128;
+ 
+ } // namespace butil
