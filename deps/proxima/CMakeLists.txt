@@ -20,34 +20,33 @@
 
 include(../../cmake/bazel.cmake)
 
-SET(ARCH "nehalem")
+set(ARCH "nehalem")
 if(ENABLE_SKYLAKE_AVX512)
-    SET(ARCH "skylake_avx512")
+  set(ARCH "skylake_avx512")
 elseif(ENABLE_SKYLAKE)
-    SET(ARCH "skylake")
+  set(ARCH "skylake")
 elseif(ENABLE_BROADWELL)
-    SET(ARCH "broadwell")
+  set(ARCH "broadwell")
 elseif(ENABLE_HASWELL)
-    SET(ARCH "haswell")
+  set(ARCH "haswell")
 elseif(ENABLE_SANDYBRIDGE)
-    SET(ARCH "sandybridge")
+  set(ARCH "sandybridge")
 elseif(ENABLE_ZEN2)
-    SET(ARCH "znver2")
+  set(ARCH "znver2")
 elseif(ENABLE_ZEN1)
-    SET(ARCH "znver1")
+  set(ARCH "znver1")
 endif()
 
-SET(PROXIMA_LIB "${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME}.${CMAKE_SYSTEM_PROCESSOR}.${ARCH}/")
+set(PROXIMA_LIB "${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME}.${CMAKE_SYSTEM_PROCESSOR}.${ARCH}/")
 if(NOT EXISTS ${PROXIMA_LIB})
-    message(FATAL_ERROR "Not supported for ${CMAKE_SYSTEM_NAME}.${CMAKE_SYSTEM_PROCESSOR}.${ARCH}")
+  message(FATAL_ERROR "Not supported for ${CMAKE_SYSTEM_NAME}.${CMAKE_SYSTEM_PROCESSOR}.${ARCH}")
 endif()
 set_property(GLOBAL PROPERTY proxima_lib_property "${PROXIMA_LIB}")
 
 cc_import(
-   NAME proxima
-   SHARED
-   PATH ${PROXIMA_LIB}/libproxima.so
-   PUBINCS include/
-)
-
+    NAME proxima
+    SHARED
+    PATH ${PROXIMA_LIB}/libproxima.so
+    PUBINCS include/
+  )
 install(DIRECTORY ${PROXIMA_LIB} DESTINATION ${CMAKE_INSTALL_LIBDIR})
