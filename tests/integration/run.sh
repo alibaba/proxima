@@ -8,9 +8,9 @@ build_dir_name=`basename $(pwd)`
 
 arch=$(uname -m)
 if [ $arch = "aarch64" ]; then
-	image=ghcr.io/alibaba/proxima-be-ci-aarch64:latest
+	image=ghcr.io/proximabilin/proxima-be-ci-aarch64:latest
 else
-	image=ghcr.io/alibaba/proxima-be-ci:latest
+	image=ghcr.io/proximabilin/proxima-be-ci:latest
 fi
 
 if [ "${mode}" = "docker" ]; then
