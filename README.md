@@ -52,9 +52,9 @@ make -j all
 
 ## 获取 Docker 镜像
 
-| 平台 | 地址 |
-| -------- | ------ |
-| Linux X86_64 | ghcr.io/alibaba/proxima-be |
+| 平台 | 仓库 | 版本 |
+| -------- | ------ | ------ |
+| Linux X86_64 | ghcr.io/proximabilin/proxima-be | 0.2.0 |
 
 ## 快速开始
 
