@@ -369,8 +369,10 @@ public class ProximaGrpcSearchClient implements ProximaSearchClient {
       throw new ProximaSEException("Rows is empty.");
     }
     for (WriteRequest.Row row : rows) {
-      if (row.getIndexValues() == null || row.getIndexValues().getValuesCount() == 0) {
-        throw new ProximaSEException("Index column values is empty in Row.");
+      if(row.getOperationType() != WriteRequest.OperationType.DELETE){
+        if (row.getIndexValues() == null || row.getIndexValues().getValuesCount() == 0) {
+          throw new ProximaSEException("Index column values is empty in Row.");
+        }
       }
     }
   }
